@@ -2,6 +2,7 @@
 services:
 
   discovery-server:
+    image: ms-discovery-server:${IMAGE_TAG:-latest}
     build:
       context: ../discovery-server
     container_name: ms-discovery-server
@@ -14,6 +15,7 @@ services:
       retries: 10
 
   api-gateway:
+    image: ms-api-gateway:${IMAGE_TAG:-latest}
     build:
       context: ../api-gateway
     container_name: ms-api-gateway
@@ -64,6 +66,7 @@ services:
       retries: 20
 
   order-service:
+    image: ms-order-service:${IMAGE_TAG:-latest}
     build:
       context: ../order.management
     container_name: ms-order-service
@@ -78,6 +81,7 @@ services:
         condition: service_healthy
 
   restaurent-service:
+    image: ms-restaurant-service:${IMAGE_TAG:-latest}
     build:
       context: ../restaurent.management
     container_name: ms-restaurent-service
