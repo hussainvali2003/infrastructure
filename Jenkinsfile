@@ -104,6 +104,10 @@ pipeline {
 
         stage('Docker Compose Deploy') {
             steps {
+                // Ensure the 'infrastructure' directory exists and contains the docker-compose.yml file.
+                // This mimics the local environment directory structure so relative paths like '../order.management' resolve correctly.
+                sh "mkdir -p ${WORKSPACE_DIR}/infrastructure"
+                sh "cp ${WORKSPACE_DIR}/docker-compose.yml ${WORKSPACE_DIR}/infrastructure/docker-compose.yml"
                 dir("${WORKSPACE_DIR}/infrastructure") {
                     echo "🚢 Rebuilding and redeploying updated services..."
                     // We run 'docker compose up -d --build --remove-orphans' with the unique IMAGE_TAG environment variable.
