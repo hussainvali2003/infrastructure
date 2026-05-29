@@ -1,5 +1,6 @@
 pipeline {
 
+
 agent any
 
 stages {
@@ -35,6 +36,42 @@ stages {
         }
     }
 
+    stage('Build Discovery Server') {
+        steps {
+            dir('/var/jenkins_home/workspace/discovery-server') {
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build -x test'
+            }
+        }
+    }
+
+    stage('Build API Gateway') {
+        steps {
+            dir('/var/jenkins_home/workspace/api-gateway') {
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build -x test'
+            }
+        }
+    }
+
+    stage('Build Order Service') {
+        steps {
+            dir('/var/jenkins_home/workspace/order.management') {
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build -x test'
+            }
+        }
+    }
+
+    stage('Build Restaurant Service') {
+        steps {
+            dir('/var/jenkins_home/workspace/restaurent.management') {
+                sh 'chmod +x gradlew'
+                sh './gradlew clean build -x test'
+            }
+        }
+    }
+
     stage('Stop Existing Containers') {
         steps {
             sh 'docker compose down || true'
@@ -52,7 +89,6 @@ stages {
             sh 'docker ps'
         }
     }
-
 }
 
 
